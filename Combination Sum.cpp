@@ -1,31 +1,32 @@
 class Solution {
-private:
-    void fun(int i, vector<vector<int>> & res, vector<int> &sub, vector<int> &candidates, int target)
+public:
+void fun(int i, int sum, vector<vector<int>> &res, vector<int> &sub, vector<int> &candidates, int target)
 {
-    if(i==candidates.size())
+    if(sum==target)
     {
-        if(target==0)
+        res.push_back(sub);
+    }
+    else
+    {
+        for(int j=i; j<candidates.size(); j++)
         {
-            res.push_back(sub);
+            if(sum+candidates[j] <= target)
+            {
+                sub.push_back(candidates[j]);
+                fun(j, sum+candidates[j], res, sub, candidates, target);
+                sub.pop_back();
+            }
         }
-        return;
     }
-    if(candidates[i]<=target)
-    {
-        sub.push_back(candidates[i]);
-        fun(i, res, sub, candidates, target-candidates[i]);
-        sub.pop_back();
-    }
-
-    fun(i+1, res, sub, candidates, target);
 }
     
-public:
     vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
         
-        vector<vector<int>> res;
+        sort(candidates.begin(), candidates.end());
+        reverse(candidates.begin(), candidates.end());
         vector<int> sub;
-        fun(0, res, sub, candidates, target);
+        vector<vector<int>> res;
+        fun(0, 0, res, sub, candidates, target);
         return res;
     }
 };
