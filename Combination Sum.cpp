@@ -30,3 +30,4 @@ void fun(int i, int sum, vector<vector<int>> &res, vector<int> &sub, vector<int>
         return res;
     }
 };
+
